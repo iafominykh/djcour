@@ -5,7 +5,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 class Message(models.Model):
     subject = models.TextField(verbose_name='тема письма')
-    body = models.TextField(**NULLABLE, verbose_name='тело письма')
+    body = models.TextField(**NULLABLE, verbose_name='текст письма')
 
 
 class Distribution(models.Model):
