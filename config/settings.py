@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'distribution.apps.DistributionConfig',
+    'distribution_log.apps.DistributionLogConfig',
 ]
 
 MIDDLEWARE = [
