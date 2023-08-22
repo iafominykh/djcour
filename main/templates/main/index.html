@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="col-xs-24 col-md-9">
+  <table class="table table-striped auto__table text-left">
+    <tbody>
+      <tr>
+        <td colspan="2">Количество рассылок всего:</td>
+        <td colspan="2">{{ mailing_count }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Количество активных рассылок</td>
+        <td colspan="2">{{ active_mailing_count }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">Количество уникальных клиентов для рассылок</td>
+        <td colspan="2">{{ count_unique_clients }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+    {% for object in blog_list %}
+        {% include 'blog/includes/inc_blog_card.html' %}
+    {% endfor %}
+{% endblock %}
