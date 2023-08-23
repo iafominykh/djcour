@@ -1,9 +1,9 @@
 from django.urls import path
 
-from users.apps import UsersConfig
+from users.apps import UserConfig
 from users.views import UserListView, UserDetailView, UserCreateView, IndexListView, UserUpdateView, UserDeleteView
 
-app_name = UsersConfig.name
+app_name = UserConfig.name
 
 urlpatterns = [
     path('', IndexListView.as_view(), name='index'),

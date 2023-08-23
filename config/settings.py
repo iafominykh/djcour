@@ -11,12 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import users.apps
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
-    'users.apps.UsersConfig',
+    'users.apps.UserConfig',
     'blog.apps.BlogConfig',
     'django_crontab',
 ]
@@ -142,8 +142,29 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 
+EMAIL_SERVER = EMAIL_HOST_USER  # email сервера
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # с какого адреса будут отправляться письма
+EMAIL_ADMIN = EMAIL_HOST_USER  # email, куда будут все данные приходить с сайта
+
+
+AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
+
+
+
 CRONJOBS = [
     ('0 12 * * *', 'main.services.send_email', ['раз в день']), #запускает в 12:00 каждый день
     ('0 12 * * 1', 'main.services.send_email', ['раз в неделю']),  #запускает в 12:00 каждый пн
     ('0 12 1 * *', 'main.services.send_email', ['раз в месяц']), #запускает в 12:00 каждый месяц
 ]
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.getenv('CACHE_LOCATION'),
+    }
+}
