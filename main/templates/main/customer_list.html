@@ -1,8 +1,8 @@
 {% extends 'main/base.html' %}
 {% block content %}
 
-    <div class="container">
-        <a href="{% url 'main:customer_create' %}" class="btn btn-primary">Добавить клиента</a>
+    <div class="container text-center">
+        <a href="{% url 'main:customer_create' %}" class="btn btn-primary btn-lg btn-block mb-3">Добавить клиента</a>
     </div>
 
     {% for object in object_list %}

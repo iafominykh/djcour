@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
-    'users.apps.UserConfig',
+    'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'django_crontab',
 ]

@@ -18,7 +18,7 @@
                 </table>
             </div>
             {% if perms.main.set_mailing_status or user.is_superuser %}
-                <a class="btn btn-info" href="{% url 'mailing_app:set_mailing_status' object.pk %}">Отключить
+                <a class="btn btn-info" href="{% url 'main:set_mailing_status' object.pk %}">Отключить
                     рассылку</a>
             {% endif %}
             <div class="card-footer">

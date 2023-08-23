@@ -1,16 +1,20 @@
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from users.apps import UserConfig
-from users.views import UserListView, UserDetailView, UserCreateView, IndexListView, UserUpdateView, UserDeleteView
+from users.apps import UsersConfig
+from users.views import ProfileUpdateView, RegisterView, EmailConfirmationSentView, UserConfirmEmailView, \
+    EmailConfirmedView, EmailConfirmationFailedView, generate_new_password
 
-app_name = UserConfig.name
+app_name = UsersConfig.name
 
 urlpatterns = [
-    path('', IndexListView.as_view(), name='index'),
-    path('users/', UserListView.as_view(), name='users_list'),
-    path('users/<int:pk>/', UserDetailView.as_view(), name='users_detail'),
-    path('create/', UserCreateView.as_view(), name='create_user'),
-    path('update/<int:pk>/', UserUpdateView.as_view(), name='update_user'),
-    path('delete/<int:pk>/', UserDeleteView.as_view(), name='users_confirm_delete'),
-
+    path('', LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('profile/', ProfileUpdateView.as_view(), name='profile'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('email-confirmation-sent/', EmailConfirmationSentView.as_view(), name='email_confirmation_sent'),
+    path('confirm-email/<str:uidb64>/<str:token>/', UserConfirmEmailView.as_view(), name='confirm_email'),
+    path('email-confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
+    path('email-confirmation-failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
+    path('profile/genpassword/', generate_new_password, name='generate_new_password')
 ]
