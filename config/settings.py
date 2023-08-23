@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,11 @@ EMAIL_USE_SSL = True
 EMAIL_USE_TSL = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+
+
+CRONJOBS = [
+    ('0 12 * * *', 'main.services.send_email', ['раз в день']), #запускает в 12:00 каждый день
+    ('0 12 * * 1', 'main.services.send_email', ['раз в неделю']),  #запускает в 12:00 каждый пн
+    ('0 12 1 * *', 'main.services.send_email', ['раз в месяц']), #запускает в 12:00 каждый месяц
+]
