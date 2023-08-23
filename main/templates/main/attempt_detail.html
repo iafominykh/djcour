@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="cool">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td>{{ object.sending }}</td>
+                    </tr>
+                    <tr>
+                        <td>Дата и время последней попытки</td>
+                        <td>{{ object.time_mailing }}</td>
+                    </tr>
+                    <tr>
+                        <td>Статус попытки</td>
+                        <td>{{ object.status }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ответ почтового сервера</td>
+                        <td>{{ object.server_response }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'main:attempt_list' %}" class="btn btn-primary"><< Назад</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,18 +1,21 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from main.models import NULLABLE
 
-NULLABLE = {'null': True, 'blank': True}
+
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(unique=True, verbose_name='Почта')
+    avatar = models.ImageField(upload_to='users/', verbose_name='Аватар', **NULLABLE)
+    is_active = models.BooleanField(default=True, verbose_name='Активность')
 
 
-# Create your models here.
-class User(models.Model):
-    email = models.EmailField(max_length=250, verbose_name='Адрес электронной почты')
-    full_name = models.CharField(max_length=255, verbose_name='ФИО')
-    image = models.ImageField(upload_to='users/', **NULLABLE, verbose_name='Изображение')
-    comment = models.TextField(**NULLABLE, verbose_name='Описание')
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.full_name}'
+        return self.email
 
     class Meta:
-        verbose_name = 'Клиент'
-        verbose_name_plural = 'Клиенты'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'

@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="cool">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td>{{ object.message }}</td>
+                    </tr>
+                    <tr>
+                        <td>Периодичность рассылки</td>
+                        <td>{{ object.frequency }}</td>
+                    </tr>
+                    <tr>
+                        <td>Статус рассылки</td>
+                        <td>{{ object.status }}</td>
+                    </tr>
+                </table>
+            </div>
+            {% if perms.main.set_mailing_status or user.is_superuser %}
+                <a class="btn btn-info" href="{% url 'main:set_mailing_status' object.pk %}">Отключить
+                    рассылку</a>
+            {% endif %}
+            <div class="card-footer">
+                <a href="{% url 'main:mailing_list' %}" class="btn btn-primary"><< Назад</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
