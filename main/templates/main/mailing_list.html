@@ -1,11 +1,12 @@
 {% extends 'main/base.html' %}
 {% block content %}
+{% if perms.main.view_mailing %}
 <div class="container-fluid text-center">
 <a href="{% url 'main:mailing_create' %}" class="btn btn-primary btn-lg btn-block mb-3">Добавить рассылку</a>
 </div>
-
+{% endif %}
 {% for object in object_list %}
-{% if object.created_by == user or perms.main.view_mailing %}
+
 <div class="col-md-12">
     <div class="card flex-md-row mb-4 box-shadow h-md-250">
         <div class="card-body d-flex flex-column align-items-start">
@@ -41,6 +42,6 @@
         </div>
     </div>
 </div>
-{% endif %}
+
 {% endfor %}
 {% endblock %}
