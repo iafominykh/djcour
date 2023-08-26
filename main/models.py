@@ -58,6 +58,8 @@ class Mailing(models.Model):
     frequency = models.CharField(max_length=100, choices=FREQUENCY_CHOICES, verbose_name='Периодичность')
     status = models.CharField(max_length=50, default=CREATED, choices=SELECT_STATUS, verbose_name='Статус рассылки')
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Создатель', **NULLABLE)
+    customer = models.ManyToManyField(Customer, verbose_name='Клиент рассылки')
+
 
     def __str__(self):
         return self.message.subject

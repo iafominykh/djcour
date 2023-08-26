@@ -1,6 +1,6 @@
 import django
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -26,17 +26,13 @@ class IndexView(TemplateView):
         return context_data
 
 
-class CustomerListView(LoginRequiredMixin, ListView):
+class CustomerListView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     model = Customer
+    permission_required = 'customer.view_customer'
     extra_context = {
         'title': 'Клиенты'
     }
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        if self.request.user.has_perm('main.view_customer'):
-            return queryset
-        return Customer.objects.filter(created_by=self.request.user)
 
 
 class CustomerDetailView(LoginRequiredMixin, DetailView):
@@ -62,6 +58,7 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
 
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
+
     extra_context = {
         'title': 'Сообщения'
     }
@@ -88,23 +85,18 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('main:message_list')
 
 
-class MailingListView(LoginRequiredMixin, ListView):
+class MailingListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Mailing
+    permission_required = 'мailing.view_мailing'
     extra_context = {
         'title': 'Рассылки'
     }
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        if self.request.user.has_perm('main.view_mailing'):
-            return queryset
-
-        return queryset.filter(created_by=self.request.user)
 
 
 class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
-    fields = ('mailing_time', 'message', 'frequency', 'status', 'created_by')
+    fields = ('mailing_time', 'message', 'frequency', 'status', 'created_by', 'customer')
     success_url = reverse_lazy('main:mailing_list')
     try:
         for send in Mailing.objects.all():
@@ -116,7 +108,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
-    fields = ('message', 'frequency', 'status',)
+    fields = ('message', 'frequency', 'status','customer')
     success_url = reverse_lazy('main:mailing_list')
 
 
